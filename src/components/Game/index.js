@@ -88,7 +88,7 @@ function Game() {
         <label>Time: {time.toFixed(1)}s</label>
       </div>
       
-        <label className="final-time">Completion time: {finalTime}s</label>
+        <label className="final-time">Best: {finalTime}s</label>
       
       <button
         className="reset-button"

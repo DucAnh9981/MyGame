@@ -32,3 +32,8 @@
     transform: translate(20%, 20%);
   }
 }
+@media (max-width: 480px) {
+  .header ,.guide{
+    display: none; 
+  }
+}

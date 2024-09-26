@@ -6,9 +6,16 @@ import Guide from "./components/Guide";
 function App() {
   return (
     <div class="container">
+      <div className="header">
       <Header />
+      </div>
+      
+
       <Game />
+      <div className="guide">
       <Guide />
+      </div>
+      
     </div>
   );
 }
