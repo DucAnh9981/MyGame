@@ -1,0 +1,154 @@
+.game {
+  z-index: 100;
+  text-align: center;
+}
+.circle-image {
+  transition: opacity 0.9s ease;
+}
+
+.circle-image.active {
+  opacity: 0.9;
+}
+.text-input {
+  position: absolute;
+  top: 20%;
+  margin-top: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.time {
+  position: absolute;
+  top: 12%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+.reset-button {
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button_radius);
+  margin: 0;
+}
+
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+.reset-button:hover .button_top {
+  transform: translateY(-0.33em);
+}
+
+.reset-button:active .button_top {
+  transform: translateY(0);
+}
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+  max-width: 180px;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 17px;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 17px;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #9b9b9b;
+  pointer-events: none;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image-slice: 1;
+}
+
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #38caef;
+  font-weight: 700;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.time {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+.board-game {
+  position: relative;
+  width: 80vw;
+  height: 70vh;
+  margin: 0px auto;
+  margin-top: 13px;
+  border: 1px solid black;
+  overflow: hidden;
+  background-color: white;
+}
+
+
+
+.circle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+
+.circle-image {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.circle-number {
+  position: absolute;
+  top: 60%;
+  left: 42%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 13px;
+}

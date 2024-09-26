@@ -1,0 +1,18 @@
+.header{
+    position: relative;
+    width: calc(100% - 120px);
+    margin: 12px auto;
+    z-index: 100;
+}
+.name{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
