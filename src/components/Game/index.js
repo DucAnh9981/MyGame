@@ -8,6 +8,7 @@ function Game() {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [nextNumber, setNextNumber] = useState(1);
   const [timer, setTimer] = useState(null);
+  const [finalTime, setFinalTime] = useState(0); // Thêm state để lưu thời gian hoàn thành
 
   const startGame = () => {
     if (n <= 0) {
@@ -30,7 +31,7 @@ function Game() {
   const stopGame = () => {
     setIsGameStarted(false);
     clearInterval(timer);
-    setTimeout(setCircles([]), 1000);
+    setTimeout(() => setCircles([]), 1000);
     setTime(0);
     setNextNumber(1);
   };
@@ -60,8 +61,9 @@ function Game() {
       }
 
       if (nextNumber === n) {
+        setFinalTime(time.toFixed(1));
         setTimeout(() => {
-          alert("ALL CLEARED");
+          alert(`ALL CLEARED!`); 
         }, 500);
         stopGame();
       }
@@ -83,9 +85,11 @@ function Game() {
       </div>
 
       <div className="time">
-        <label>Thời gian: {time.toFixed(1)}s</label>
+        <label>Time: {time.toFixed(1)}s</label>
       </div>
-
+      
+        <label className="final-time">Completion time: {finalTime}s</label>
+      
       <button
         className="reset-button"
         onClick={startGame}
@@ -120,6 +124,7 @@ function Game() {
           </div>
         ))}
       </div>
+      
     </div>
   );
 }
