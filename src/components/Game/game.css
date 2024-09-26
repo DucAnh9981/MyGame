@@ -127,7 +127,7 @@
 .board-game {
   position: relative;
   width: 80vw;
-  height: 70vh;
+  height: 66vh;
   margin: 0px auto;
   margin-top: 13px;
   border: 1px solid rgb(56, 96, 147);
@@ -158,13 +158,30 @@
   color: black;
   font-size: 13px;
 }
+.final-in-mobile{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+}
 @media (max-width: 580px) {
   .final-time{
     left: 78%;
-    top: 11%;
+    top: 23%;
   }
   .time{
     left: 22%;
-    top: 11%;
+    top: 23%;
+  }
+  .final-in-mobile{
+    display: block;
+  }
+  .text-input{
+    margin-top: 72px;
+  }
+  .board-game{
+    height: 66vh;
   }
 }

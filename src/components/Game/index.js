@@ -6,9 +6,12 @@ function Game() {
   const [time, setTime] = useState(0);
   const [circles, setCircles] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [hasGameStartedOnce, setHasGameStartedOnce] = useState(false);
+
   const [nextNumber, setNextNumber] = useState(1);
   const [timer, setTimer] = useState(null);
-  const [finalTime, setFinalTime] = useState(0); // Thêm state để lưu thời gian hoàn thành
+  const [finalTime, setFinalTime] = useState(0);
+  const [isGameWon, setIsGameWon] = useState(false);
 
   const startGame = () => {
     if (n <= 0) {
@@ -18,8 +21,10 @@ function Game() {
 
     setIsGameStarted(true);
     setCircles(generateCircles(n));
+    setIsGameWon(false);
     setTime(0);
     setNextNumber(1);
+    setHasGameStartedOnce(true);
 
     if (timer) clearInterval(timer);
     const interval = setInterval(() => {
@@ -28,12 +33,13 @@ function Game() {
     setTimer(interval);
   };
 
-  const stopGame = () => {
-    setIsGameStarted(false);
+  const resetGame = () => {
     clearInterval(timer);
-    setTimeout(() => setCircles([]), 1000);
+    setCircles([]);
     setTime(0);
     setNextNumber(1);
+    setIsGameWon(false);
+    setIsGameStarted(false);
   };
 
   const generateCircles = (n) => {
@@ -55,17 +61,18 @@ function Game() {
         circleElement.style.filter = "hue-rotate(90deg)";
 
         setTimeout(() => {
-          circleElement.style.transition = "opacity 2s";
+          circleElement.style.transition = "opacity 1s";
           circleElement.style.opacity = 0;
         }, 1000);
       }
 
       if (nextNumber === n) {
         setFinalTime(time.toFixed(1));
+        setIsGameWon(true);
         setTimeout(() => {
-          alert(`ALL CLEARED!`); 
-        }, 500);
-        stopGame();
+          alert(`ALL CLEARED!`);
+        }, 1000);
+        resetGame();
       }
     }
   };
@@ -87,23 +94,22 @@ function Game() {
       <div className="time">
         <label>Time: {time.toFixed(1)}s</label>
       </div>
-      
-        <label className="final-time">Best: {finalTime}s</label>
-      
-      <button
-        className="reset-button"
-        onClick={startGame}
-        disabled={isGameStarted}
-      >
-        <span className="button_top">Start</span>
-      </button>
+
+      <label className="final-time">Best: {finalTime}s</label>
 
       <button
         className="reset-button"
-        onClick={stopGame}
-        disabled={!isGameStarted}
+        onClick={() => {
+          if (!isGameStarted) {
+            startGame();
+          } else {
+            resetGame();
+          }
+        }}
       >
-        <span className="button_top">Reset</span>
+        <span className="button_top">
+          {hasGameStartedOnce ? "Reset" : "Start"}
+        </span>
       </button>
 
       <div className="board-game">
@@ -124,7 +130,8 @@ function Game() {
           </div>
         ))}
       </div>
-      
+
+      {isGameWon && <label className="final-in-mobile">ALL CLEARED</label>}
     </div>
   );
 }
