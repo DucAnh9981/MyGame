@@ -80,7 +80,7 @@ function Game() {
           onChange={(e) => setN(Math.max("", parseInt(e.target.value)))}
         />
         <label htmlFor="name" className="form__label">
-          Input n
+          Point
         </label>
       </div>
 
