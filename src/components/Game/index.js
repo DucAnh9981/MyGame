@@ -59,30 +59,36 @@ function Game() {
   const handleCircleClick = (number) => {
     if (isHandlingClick) return;
     setIsHandlingClick(true);
+
     if (number === nextNumber) {
-      setNextNumber(nextNumber + 1);
+        setNextNumber(nextNumber + 1);
 
-      const circleElement = document.getElementById(`circle-${number}`);
-      if (circleElement) {
-        circleElement.style.filter = "hue-rotate(133deg)";
-        circleElement.style.opacity = 1;
-        setTimeout(() => {
-          circleElement.style.transition = "opacity 1s";
-          circleElement.style.opacity = 0;
-        }, 500);
-      }
+        const circleElement = document.getElementById(`circle-${number}`);
+        if (circleElement) {
+            circleElement.style.filter = "hue-rotate(133deg)";
+            circleElement.style.opacity = 1;
 
-      if (nextNumber === n) {
-        setFinalTime(time.toFixed(1));
-        setIsGameWon(true);
-        setTimeout(() => {
-          alert(`ALL CLEARED!`);
-        }, 1000);
-        clearInterval(timer);
-      }
+
+            setTimeout(() => {
+               
+                setCircles((prevCircles) =>
+                    prevCircles.filter(circle => circle.number !== number)
+                );
+            }, 500);
+        }
+
+        
+        if (nextNumber === n) {
+            setFinalTime(time.toFixed(1)); 
+            setIsGameWon(true);
+            setTimeout(() => {
+                alert(`ALL CLEARED!`);
+            }, 1000);
+            clearInterval(timer);
+        }
     }
-    setIsHandlingClick(false); 
-  };
+    setIsHandlingClick(false);
+};
 
   return (
     <div className="game">
