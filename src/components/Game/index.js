@@ -3,43 +3,47 @@ import "./game.css";
 
 function Game() {
   const [n, setN] = useState(0);
+  const [inputN, setInputN] = useState(0);
   const [time, setTime] = useState(0);
   const [circles, setCircles] = useState([]);
-  const [isGameStarted, setIsGameStarted] = useState(false);
-  const [hasGameStartedOnce, setHasGameStartedOnce] = useState(false);
-
   const [nextNumber, setNextNumber] = useState(1);
   const [timer, setTimer] = useState(null);
   const [finalTime, setFinalTime] = useState(0);
   const [isGameWon, setIsGameWon] = useState(false);
+  const [hasGameStartedOnce, setHasGameStartedOnce] = useState(false);
+  const [isHandlingClick, setIsHandlingClick] = useState(false);
 
-  const startGame = () => {
-    if (n <= 0) {
+  const startOrResetGame = () => {
+    if (inputN <= 0) {
       alert("Please enter a number of cells greater than 0!");
       return;
     }
 
-    setIsGameStarted(true);
-    setCircles(generateCircles(n));
+    clearInterval(timer);
+
+    for (let i = 1; i <= n; i++) {
+      const circleElement = document.getElementById(`circle-${i}`);
+      if (circleElement) {
+        circleElement.style.opacity = 1;
+        circleElement.style.filter = "";
+      }
+    }
+
+    setN(inputN);
+    setCircles(generateCircles(inputN));
     setIsGameWon(false);
     setTime(0);
     setNextNumber(1);
     setHasGameStartedOnce(true);
 
-    if (timer) clearInterval(timer);
     const interval = setInterval(() => {
       setTime((prevTime) => prevTime + 0.1);
     }, 100);
     setTimer(interval);
-  };
-
-  const resetGame = () => {
-    clearInterval(timer);
-    setCircles([]);
-    setTime(0);
-    setNextNumber(1);
-    setIsGameWon(false);
-    setIsGameStarted(false);
+    setTimeout(() => {
+      setNextNumber(1);
+      setIsGameWon(false);
+    }, 0);
   };
 
   const generateCircles = (n) => {
@@ -53,17 +57,19 @@ function Game() {
   };
 
   const handleCircleClick = (number) => {
+    if (isHandlingClick) return;
+    setIsHandlingClick(true);
     if (number === nextNumber) {
       setNextNumber(nextNumber + 1);
 
       const circleElement = document.getElementById(`circle-${number}`);
       if (circleElement) {
-        circleElement.style.filter = "hue-rotate(90deg)";
-
+        circleElement.style.filter = "hue-rotate(133deg)";
+        circleElement.style.opacity = 1;
         setTimeout(() => {
           circleElement.style.transition = "opacity 1s";
           circleElement.style.opacity = 0;
-        }, 1000);
+        }, 500);
       }
 
       if (nextNumber === n) {
@@ -72,9 +78,10 @@ function Game() {
         setTimeout(() => {
           alert(`ALL CLEARED!`);
         }, 1000);
-        resetGame();
+        clearInterval(timer);
       }
     }
+    setIsHandlingClick(false); 
   };
 
   return (
@@ -83,8 +90,8 @@ function Game() {
         <input
           className="form__field"
           type="number"
-          value={n}
-          onChange={(e) => setN(Math.max("", parseInt(e.target.value)))}
+          value={inputN}
+          onChange={(e) => setInputN(Math.max(0, parseInt(e.target.value) || 0))}
         />
         <label htmlFor="name" className="form__label">
           Point
@@ -97,16 +104,7 @@ function Game() {
 
       <label className="final-time">Best: {finalTime}s</label>
 
-      <button
-        className="reset-button"
-        onClick={() => {
-          if (!isGameStarted) {
-            startGame();
-          } else {
-            resetGame();
-          }
-        }}
-      >
+      <button className="reset-button" onClick={startOrResetGame}>
         <span className="button_top">
           {hasGameStartedOnce ? "Reset" : "Start"}
         </span>
